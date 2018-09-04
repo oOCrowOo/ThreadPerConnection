@@ -41,7 +41,7 @@ public class ClientUI {
 			System.exit(0);
 		}else {
 			 try{
-				 port = Integer.parseInt(args[0]);
+				 port = Integer.parseInt(args[1]);
 				 System.out.println("port is "+ port);
 			 }catch(NumberFormatException e) {
 				 System.out.println("Port must be a number.");
@@ -49,7 +49,7 @@ public class ClientUI {
 			 }
 		}
 		
-		ip = args[1];
+		ip = args[0];
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
