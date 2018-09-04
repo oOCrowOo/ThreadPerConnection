@@ -1,19 +1,13 @@
 package server;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 public class ClientConnection extends Thread{
 	
 	private Socket clientSocket;
-	private BufferedReader reader;
-	private BufferedWriter writer;
 	private DataInputStream is;
 	private DataOutputStream out;
 	private String path;
@@ -61,7 +55,7 @@ public class ClientConnection extends Thread{
 			}
 			
 		} catch (IOException e) {
-			System.out.println("Cannot read request from client.");
+			System.out.println("A client is offline.");
 			//e.printStackTrace();
 		}
 		

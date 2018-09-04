@@ -37,25 +37,43 @@ public class Server {
 		path = args[1];
 		
 		File file = new File(path);
-		
-		if(file.exists()) {
-			System.out.println("File exits");
+		if (file.isDirectory()) {
+			 path = path + "/dict.txt";
+			 System.out.println("The path is not a file, server already create one 'dict.txt' in the path.");
+			 System.out.println("File not exits, create one now.");
+				Map<String, String> map = new HashMap<String, String>();
+				JSONObject jb = new JSONObject(map);
+				BufferedWriter out;
+				try {
+					out = new BufferedWriter(new FileWriter(path));
+					out.write(jb.toString());
+					out.close();
+				} catch (IOException e) {
+					System.out.println("Cannot open the file in the path: " + path);
+					//e.printStackTrace();
+					System.exit(0);
+				}
 		}
 		else {
-			System.out.println("File not exits, create one now.");
-			Map<String, String> map = new HashMap<String, String>();
-			JSONObject jb = new JSONObject(map);
-			BufferedWriter out;
-			try {
-				out = new BufferedWriter(new FileWriter(path));
-				out.write(jb.toString());
-				out.close();
-			} catch (IOException e) {
-				System.out.println("Cannot open the file in the path: " + path);
-				//e.printStackTrace();
+			if(file.exists()) {
+				System.out.println("File exits");
 			}
-			
+			else {
+				System.out.println("File not exits, create one now.");
+				Map<String, String> map = new HashMap<String, String>();
+				JSONObject jb = new JSONObject(map);
+				BufferedWriter out;
+				try {
+					out = new BufferedWriter(new FileWriter(path));
+					out.write(jb.toString());
+					out.close();
+				} catch (IOException e) {
+					System.out.println("Cannot open the file in the path: " + path);
+					//e.printStackTrace();
+				}
+			}
 		}
+		
 		
 		try {
 			listeningSocket = new ServerSocket(port);
@@ -75,7 +93,7 @@ public class Server {
 					listeningSocket.close();
 				}catch (IOException e) {
 					System.out.println("listeningSocket close fail.");
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 		}
