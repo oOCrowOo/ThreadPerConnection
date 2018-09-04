@@ -3,6 +3,8 @@ package client;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -26,6 +28,9 @@ public class ClientUI {
 	private JButton btnDelete;
 	private JButton btnAdd;
 	private static JTextArea textArea;
+	private Socket socket;
+	private static DataOutputStream os;
+	private static DataInputStream is;
 	
 	/**
 	 * Launch the application.
@@ -84,20 +89,30 @@ public class ClientUI {
 		
 		textArea = new JTextArea();
 		
+		
+		if(!connectServer(socket)) {
+			textArea.setText("");
+			textArea.setText("Server is not online, you cannot get any result from any action.");
+		}
+		
 
 		btnFind.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
 				System.out.println("Client find");
 				word = textField.getText();
 				if(isEmpty(word)) {
 					textArea.setText("");
 					textArea.setText("Please enter a word.");
 				}
+				else if(word.split(" ").length != 1) {
+					textArea.setText("Please enter single word.");
+				}
 				else {
 					System.out.println("find: " + word);
-					ClientProcess.findWord(ip, port, word);
+					ClientProcess.findWord(ip, port, word, socket, os, is);
 				}
 			}
 		});
@@ -119,8 +134,9 @@ public class ClientUI {
 				}
 				if(!isEmpty(meaning) && !isEmpty(word)) {
 					System.out.println("add: " + word + ", " + meaning);
-					ClientProcess.addWord(ip, port, word, meaning);
+					ClientProcess.addWord(ip, port, word, meaning, socket, os, is);
 				}
+				
 			}
 		});
 		
@@ -136,7 +152,7 @@ public class ClientUI {
 				}
 				else {
 					System.out.println("delete: " + word);
-					ClientProcess.deleteWord(ip, port, word);
+					ClientProcess.deleteWord(ip, port, word, socket, os, is);
 				}
 			}
 		});
@@ -185,4 +201,26 @@ public class ClientUI {
 	public static void setTextArea(String str) {
 		textArea.setText(str);
 	}
+	
+	public static Boolean connectServer(Socket socket) {
+		try {
+			socket = new Socket(ip,port);
+			os = new DataOutputStream(socket.getOutputStream());
+			is = new DataInputStream(socket.getInputStream());
+			textArea.setText("");
+			textArea.setText("Client now is connected to server.");
+			return true;
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			textArea.setText("IP address is incorrect.");
+			//e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			textArea.setText("Server is not online.");
+			//e.printStackTrace();
+			return false;
+		}
+	}
+	
 }
