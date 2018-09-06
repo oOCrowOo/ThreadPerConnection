@@ -39,20 +39,26 @@ public class Server {
 		File file = new File(path);
 		if (file.isDirectory()) {
 			 path = path + "/dict.txt";
-			 System.out.println("The path is not a file, server already create one 'dict.txt' in the path.");
-			 System.out.println("File not exits, create one now.");
-				Map<String, String> map = new HashMap<String, String>();
-				JSONObject jb = new JSONObject(map);
-				BufferedWriter out;
-				try {
-					out = new BufferedWriter(new FileWriter(path));
-					out.write(jb.toString());
-					out.close();
-				} catch (IOException e) {
-					System.out.println("Cannot open the file in the path: " + path);
-					//e.printStackTrace();
-					System.exit(0);
-				}
+			 System.out.println("The path is not a file.");
+			 if(file.exists()) {
+					System.out.println("dict.txt exits in the path.");
+			 }
+			 else {
+				 System.out.println("dict.txt not exits in the path, server will create one.");
+				 System.out.println("File not exits, create one now.");
+					Map<String, String> map = new HashMap<String, String>();
+					JSONObject jb = new JSONObject(map);
+					BufferedWriter out;
+					try {
+						out = new BufferedWriter(new FileWriter(path));
+						out.write(jb.toString());
+						out.close();
+					} catch (IOException e) {
+						System.out.println("Cannot open the file in the path: " + path);
+						//e.printStackTrace();
+						System.exit(0);
+					}
+			 }	
 		}
 		else {
 			if(file.exists()) {
@@ -86,10 +92,11 @@ public class Server {
 			}
 		} catch (IOException e) {
 			System.out.println("Cannot create server socket.");
-			e.printStackTrace();
+			//e.printStackTrace();
 		} finally {
 			if(listeningSocket != null) {
 				try {
+					System.out.println("server close");
 					listeningSocket.close();
 				}catch (IOException e) {
 					System.out.println("listeningSocket close fail.");
