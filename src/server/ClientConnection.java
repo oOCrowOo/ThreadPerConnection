@@ -5,6 +5,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+/**
+ * @author Yunfei Peng 987588
+ *
+ */
+
 public class ClientConnection extends Thread{
 	
 	private Socket clientSocket;

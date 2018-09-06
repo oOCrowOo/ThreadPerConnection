@@ -17,6 +17,11 @@ import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextArea;
 
+/**
+ * @author Yunfei Peng 987588
+ *
+ */
+
 public class ClientUI {
 
 	private JFrame frame;

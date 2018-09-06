@@ -11,6 +11,10 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+/**
+ * @author Yunfei Peng 987588
+ *
+ */
 public class Server {
 	
 	private static int port;

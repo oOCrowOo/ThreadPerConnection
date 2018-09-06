@@ -6,6 +6,11 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+/**
+ * @author Yunfei Peng 987588
+ *
+ */
+
 public class ClientProcess {
 
 	
