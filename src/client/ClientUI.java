@@ -88,6 +88,7 @@ public class ClientUI {
 		
 		JButton btnFind = new JButton("find");
 		
+		
 		JButton btnAdd = new JButton("add");
 		
 		JButton btnDelete = new JButton("delete");
